@@ -1,0 +1,99 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Cygnature</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+          <link href="{% static 'css/home.css' %}" rel="stylesheet">
+          <link href="css/about.css" rel="stylesheet">
+          <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+        
+            .main-container {
+                min-height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+        
+            .about-us-container {
+                flex-grow: 1;
+            }
+        
+            #footer {
+                margin-top: auto;
+            }
+        </style>        
+    
+</head>
+<body data-new-gr-c-s-check-loaded="14.1108.0" data-gr-ext-installed="">
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root">
+    <div class="main-container">
+        <header id="header">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container"><a href="#home" class="navbar-brand">Cygnature</a>
+                    <button aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation"
+                            class="navbar-toggler collapsed"><span class="navbar-toggler-icon"></span></button>
+                    <div class="navbar-collapse collapse" id="basic-navbar-nav">
+                        <div class="me-auto navbar-nav" id="navbar">
+                            <ul id="navlist">
+                                <li><a href="/"  style="margin-left: 5px;">Home</a></li>
+                                <li><a href="/search"  style="margin-left: 5px;">Books</a></li>
+                                <li><a href="/about"  style="margin-left: 5px;">AboutUs</a></li>
+                                <li>
+                                    {% if request.user.email %}
+                                        <a href="/auth/logout"  style="margin-left: 5px;">Logout</a>
+                                    {% else %}
+                                        <a href="/auth/login">Login</a>
+                                    {% endif %}
+                                </li>
+                                <li><a class="karticon" href="/kart"  style="margin-left:5px;"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="about-us-container" style="border: 1px solid #ccc; padding: 20px; background-color: #f1f1f1; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <h1>About Us</h1>
+            <p>Welcome to our digital library! We are a team of passionate developers who have come together to create
+                an online platform that provides access to a vast collection of books and resources. Our goal is to make
+                reading and learning more accessible to everyone, regardless of their location or financial
+                situation.</p>
+            <p>Our team is dedicated to providing the highest quality service to our users. We are constantly working to
+                improve and expand our collection, adding new titles and resources every day. We also offer a range of
+                features and tools that help you make the most of your reading experience, such as bookmarks, notes, and
+                highlighting.</p>
+            <div class="contact-info-container">
+                <div style="margin-right: 20px;">
+                    <p>Phone: 9383452673<br></p></div>
+                    
+                <div><p>Email: cygnature@gmail.com</p></div>
+            </div>
+        </div>
+        <footer id="footer" class="sticky-footer">
+            <div class="footer container-fluid">
+                <div class="row">
+                    <div class="col-sm-4"><h2>Need help ?</h2>
+                        <ul class="footer-link">
+                            <li><a href="">India: +91 8547575063</a></li>
+                            <li><a href="">email: Cygnature@gmail.com</a></li>
+                            <li><a href="">Contact &amp; Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">© 2023 Cygnature. All Right Reserved.</div>
+            </div>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

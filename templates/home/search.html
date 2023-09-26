@@ -1,0 +1,168 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Web site created using create-react-app">
+    <title>Cygnature</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <link href="{% static 'css/search.css' %}" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1108.0" data-gr-ext-installed="">
+<div id="root">
+    <div class="App">
+        <header id="header">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container"><a href="#home" class="navbar-brand">Cygnature</a>
+                    <button aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation"
+                            class="navbar-toggler collapsed"><span class="navbar-toggler-icon"></span></button>
+                    <div class="navbar-collapse collapse" id="basic-navbar-nav">
+                        <div class="me-auto navbar-nav" id="navbar">
+                            <ul id="navlist">
+                                <li><a href="/" style="margin-left: 5px;">Home</a></li>
+                                <li><a href="/search" style="margin-left: 5px;">Books</a></li>
+                                <li><a href="/about" style="margin-left: 5px;">AboutUs</a></li>
+                                <li>
+                                    {% if request.user.email %}
+                                        <a href="/auth/logout" style="margin-left: 5px;">Logout</a>
+                                    {% else %}
+                                        <a href="/auth/login" style="margin-left: 5px;">Login</a>
+                                    {% endif %}
+                                </li>
+                                <li><a class="karticon" href="/kart" style="margin-left: 5px;"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <section id="search" class="search-block">
+                <div class="container-fluid">
+                    <div class="search-title"><h2>Find your Resource in library</h2>
+                        <div class="subtitle"></div>
+                    </div>
+                    <form class="serach-form" action="/search" method="get">
+                        <div class="justify-content-md-center search-bar row">
+                            <div class="col-sm-3">
+                                <input placeholder="search by keywords" type="text" name="text"
+                                       class="form-control form-control-sm" value="{{ text }}">
+                            </div>
+                            <div class="col-sm-3">
+                                <select class="form-select" name="category">
+                                    <option value="">Search by category</option>
+                                    {% for id, value in categories %}
+                                        <option value="{{ id }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <select class="form-select" name="catalog">
+                                    <option value="">Search by catalog</option>
+                                    {% for id, value in catalogs %}
+                                        <option value="{{ id }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="btn-holder">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i
+                                            class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <section class="display-search">
+                <div class="filter">
+                    <h2>Filter</h2>
+                    <select class="select-category" id="author">
+                        <option value="">Author</option>
+                        {% for value in authors %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <select class="select-category" id="category">
+                        <option value="">Category</option>
+                        {% for id, value in categories %}
+                            <option value="{{ id }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <select class="select-category" id="catalog">
+                        <option value="">Catalog</option>
+                        {% for id, value in catalogs %}
+                            <option value="{{ id }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="item">
+                    {% for book in books %}
+                        <div class="item-single row">
+                            <div class="col-6">
+                                <p>{{ book.file_name }}</p>
+                                <p>Author: {{ book.author }}</p>
+                                <p>Category: {{ book.category }}</p>
+                                <p>Malicious: {{ book.is_malicious }}</p>
+                            </div>
+                            <div class="col-6 d-flex flex-column justify-content-center px-5">
+                                <a href="/kart/add/{{ book.id }}" class="btn btn-primary btn-sm mx-5 mb-2">Add To Cart</a>
+                                
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <div class="title-holder"><h2>Follow Us</h2></div>
+            <div class="social-media">
+                <i class="fa-brands fa-facebook fa-6x"></i>
+                <i class="fab fa-twitter fa-6x"></i>
+                <i class="fab fa-linkedin-in fa-6x"></i>
+            </div>
+
+
+        </main>
+        <footer id="footer">
+            <div class="footer container-fluid">
+                <div class="row">
+                    <div class="col-sm-4"><h2>Need help?</h2>
+                        <ul class="footer-link">
+                            <li><a href="">India: +91 8547575063</a></li>
+                            <li><a href="">email: Cygnature@gmail.com</a></li>
+                            <li><a href="">Contact &amp; Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">© 2023 Cygnature. All Right Reserved.</div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script>
+    ["author", "category", "catalog"].forEach((id) => {
+        const filter = document.getElementById(id);
+        const url = new URL(window.location.href);
+        const value = url.searchParams.get(id);
+
+        if (value) {
+            filter.value = value;
+        }
+
+        filter.addEventListener('change', (event) => {
+            update(id, event.target.value);
+        });
+    });
+
+    function update(id, value) {
+        const url = new URL(window.location.href);
+        url.searchParams.set(id, value);
+        window.location.href = url.href;
+    }
+</script>
+</body>
+</html>

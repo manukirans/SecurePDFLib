@@ -1,0 +1,108 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Web site created using create-react-app">
+    <title>Cygnature</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1108.0" data-gr-ext-installed="">
+<div id="root">
+    <div class="App">
+        <header id="header">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container"><a href="#home" class="navbar-brand">Cygnature</a>
+                    <button aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation"
+                            class="navbar-toggler collapsed"><span class="navbar-toggler-icon"></span></button>
+                    <div class="navbar-collapse collapse" id="basic-navbar-nav">
+                        <div class="me-auto navbar-nav" id="navbar">
+                            <ul id="navlist">
+                                <li><a href="/" style="margin-left: 5px;">Home</a></li>
+                                <li><a href="/search" style="margin-left: 5px;">MyLibrary</a></li>
+                                <li><a href="/about" style="margin-left: 5px;">AboutUs</a></li>
+                                <li>
+                                    {% if request.user.email %}
+                                        <a href="/auth/logout">Logout</a>
+                                    {% else %}
+                                        <a href="/auth/login">Login</a>
+                                    {% endif %}
+                                </li>
+                                <li><a class="karticon" href="/kart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main class="my-5 py-5 h-75">
+            <div class="row">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="p-3 row">
+                <div class="col-3">
+                </div>
+                <div class="col-6">
+                    <form action="/file/upload/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="w-100 py-2">
+                            <input type="file" name="file" required>
+                        </div>
+                        <div class="w-100 py-2">
+                            <input type="text" name="title" placeholder="Book Title" required>
+                        </div>
+                        <div class="w-100 py-2">
+                            <input type="text" name="author" placeholder="Author" required>
+                        </div>
+                        <div class="w-100 py-2">
+                            <label for="category">Category</label>
+                            <select type="text" name="category" required>
+                                {% for id, value in categories %}
+                                    <option value="{{ id }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="w-100 py-2">
+                            <label for="category">Catalog</label>
+                            <select type="text" name="catalog" required>
+                                {% for id, value in catalogs %}
+                                    <option value="{{ id }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="w-100 py-2">
+                            <input type="text" name="description" placeholder="Description">
+                        </div>
+                        <button class="btn btn-primary" type="submit">Upload</button>
+                    </form>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </main>
+        <footer id="footer">
+            <div class="footer container-fluid">
+                <div class="row">
+                    <div class="col-sm-4"><h2>Need help ?</h2>
+                        <ul class="footer-link">
+                            <li><a href="">India: +91 8547575063</a></li>
+                            <li><a href="">email: Cygnature@gmail.com</a></li>
+                            <li><a href="">Contact &amp; Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">© 2023 Cygnature. All Right Reserved.</div>
+            </div>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

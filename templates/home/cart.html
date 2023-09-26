@@ -1,0 +1,90 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Web site created using create-react-app">
+    <title>Cygnature</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+     crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <link href="{% static 'css/cart.css' %}" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-load*ed="14.1108.0" data-gr-ext-installed="">
+<div id="root">
+    <div class="library-wrapper">
+        <header id="header">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container"><a href="#home" class="navbar-brand">Cygnature</a>
+                    <button aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation"
+                            class="navbar-toggler collapsed"><span class="navbar-toggler-icon"></span></button>
+                    <div class="navbar-collapse collapse" id="basic-navbar-nav">
+                        <div class="me-auto navbar-nav" id="navbar">
+                            <ul id="navlist">
+                                <li><a href="/" style="margin-left: 5px;">Home</a></li>
+                                <li><a href="/search" style="margin-left: 5px;">Books</a></li>
+                                <li><a href="/about" style="margin-left: 5px;">AboutUs</a></li>
+                                <li>
+                                    {% if request.user.email %}
+                                        <a href="/auth/logout" style="margin-left: 5px;">Logout</a>
+                                    {% else %}
+                                        <a href="/auth/login" style="margin-left: 5px;">Login</a>
+                                    {% endif %}
+                                </li>
+                                <li><a class="karticon" href="/kart" style="margin-left: 5px;"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="library">
+            <div class="library-documents">
+                <ul>
+                    {% for book in books %}
+                        <li>
+                            <div class="document-details document-box">
+                                <div class="document-info">
+                                    <div class="document-title">
+                                        <h3>{{ book.file_name }}</h3>
+                                        <span><strong>{{ book.author }}</strong></span></div>
+                                    <div class="document-meta">
+                                        <span>Category: {{ book.category }}</span></div>
+                                </div>
+                                <div class="document-abstract" style="cursor: pointer;">
+                                    <p><em>{{ book.description }}</em></p>
+                                </div>
+                                <div class="download-button">
+                                    <a href="/file/download/{{ book.id}}" download>Download</a>
+                                    <form method="POST" action="{% url 'remove_book_from_cart' book.id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="bookId" value="{{ book.id }}">
+                                        <button type="submit">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <footer id="footer">
+            <div class="footer container-fluid">
+                <div class="row">
+                    <div class="col-sm-4"><h2>Need help ?</h2>
+                        <ul class="footer-link">
+                            <li><a href="">India: +91 8547575063</a></li>
+                            <li><a href="">email: Cygnature@gmail.com</a></li>
+                            <li><a href="">Contact &amp; Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">© 2023 Cygnature. All Right Reserved.</div>
+            </div>
+        </footer>
+    </div>
+</div>
+</body>
+</html>
